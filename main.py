@@ -404,7 +404,7 @@ def make_comment_from_no_comments(comment, reason_code):
     return "DELETED"
 
   elif (comment is None):
-    return "No comment but reason code exists."
+    return reason_code
   
   else:
     return comment
