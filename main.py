@@ -404,7 +404,10 @@ def make_comment_from_no_comments(comment, reason_code):
     return "DELETED"
 
   elif (comment is None):
-    return reason_code
+    if (reason_code in ['lunch', 'breaks', 'shift start', 'shift end']):
+      return "DELETED"
+    else:
+      return reason_code
   
   else:
     return comment
