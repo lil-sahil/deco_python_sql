@@ -392,7 +392,7 @@ def make_comment_from_no_comments(comment, reason_code):
     return "No Comment and No Reason Code"
   
   elif ( (comment is None) and (reason_code == 'down (unclassified)') ):
-    return "DELETED"
+    return reason_code
 
   elif (comment is None):
     if (reason_code in ['lunch', 'breaks', 'shift start', 'shift end']):
@@ -401,11 +401,11 @@ def make_comment_from_no_comments(comment, reason_code):
       return reason_code
   
   else:
-    return comment
+    return reason_code
 
-df_filtered['comment'] = df_filtered[['comment', 'Name_2']].apply(lambda x: make_comment_from_no_comments(x[0], x[1]), axis = 1)
+df_filtered['Name_2'] = df_filtered[['comment', 'Name_2']].apply(lambda x: make_comment_from_no_comments(x[0], x[1]), axis = 1)
 
-df_filtered = df_filtered[df_filtered['comment'] != 'DELETED']
+df_filtered = df_filtered[df_filtered['Name_2'] != 'DELETED']
   
 
 # Extract station # from comment.
@@ -413,7 +413,9 @@ def get_station_from_comment(comment):
   if comment is None:
     return comment
   else:
-    pattern = re.compile(r'(^\d|\d*[/-]\d*|\bop|\bstn|\bst|\bstation|\bzone)(\s|-|#|.|\d)(\s|-|#)?\s?\d*')
+    # re.compile(r'(^\d|\d*[/-]\d*|\bop|\bstn|\bst|\bstation|\bzone)(\s|-|#|.|\d)(\s|-|#)?\s?\d*') Previous regex.
+
+    pattern = re.compile(r'(\bop|\bstn|\bst|\bstation|\bgrob|\bzone)(\s|-|#|.|\d)(\s|-|#)?\s?\d*')
     matches = pattern.finditer(comment)
 
     for match in matches:
@@ -427,6 +429,6 @@ def get_station_from_comment(comment):
     
 
 
-df_filtered['Station'] = df_filtered['comment'].apply( get_station_from_comment)
+df_filtered['Station'] = df_filtered['Name_2'].apply( get_station_from_comment)
 
 df_filtered.to_csv(r'data_DW.csv')
