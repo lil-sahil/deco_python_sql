@@ -113,10 +113,11 @@ class Plc_AB:
       returns: Continous print of the tag at the specified index.
 
     '''
-    while True:
-      print(self.read_tag(tag_name)[index])
-      time.sleep(interval)
-  
+    with pycomm3.LogixDriver(self.ip_adress) as plc:
+      while True:
+        print(plc.read('{}'.format(tag_name))[index])
+        time.sleep(interval)
+      
   def get_ip(self):
     '''
     Get current ip associated with the PLC instance.
