@@ -1,5 +1,6 @@
 # By Sahil Nagpal
 
+from os import read
 import pandas as pd
 import numpy as np
 
@@ -408,27 +409,41 @@ df_filtered['Name_2'] = df_filtered[['comment', 'Name_2']].apply(lambda x: make_
 df_filtered = df_filtered[df_filtered['Name_2'] != 'DELETED']
   
 
-# Extract station # from comment.
-def get_station_from_comment(comment):
-  if comment is None:
-    return comment
-  else:
-    # re.compile(r'(^\d|\d*[/-]\d*|\bop|\bstn|\bst|\bstation|\bzone)(\s|-|#|.|\d)(\s|-|#)?\s?\d*') Previous regex.
 
-    pattern = re.compile(r'(\bop|\bstn|\bst|\bstation|\bgrob|\bzone)(\s|-|#|.|\d)(\s|-|#)?\s?\d*')
-    matches = pattern.finditer(comment)
+# extract pattern
+def get_pattern(col):
+  
+  pattern = re.compile(r'(\bgrob|\bop|\bstn|\bstation)(\s|-|#|.|\d|op)(\s|-|#|op|stn)?\s?\d+[a-zA-Z]?')
+  try:
+    matches = pattern.finditer(col)
+  except:
+    print(col)
+
+  for match in matches:
+    pattern = re.compile(r'(\d+(a|b)?)')
+    matches = pattern.finditer(match[0])
 
     for match in matches:
-      
-      pattern = re.compile(r'(\d+)')
+      return(match[0])
 
-      matches = pattern.finditer(match[0])
+# Extract station # from comment.
+def get_station(comment, reason_code):
 
-      for match in matches:
-        return(int(match[0]))
-    
+  if comment== None and reason_code == None:
+    return None
+
+  # Check Reason Code
+  if reason_code != None:
+    station = get_pattern(reason_code)
+
+    if station == None and comment != None:
+      return get_pattern(comment)
+  
+    else:
+      return station
 
 
-df_filtered['Station'] = df_filtered['Name_2'].apply( get_station_from_comment)
+# Pass through Reason Codes for station.
+df_filtered['Station'] = df_filtered[['comment','Name_2']].apply( lambda x: get_station(*x), axis = 1)
 
 df_filtered.to_csv(r'data_DW.csv')
