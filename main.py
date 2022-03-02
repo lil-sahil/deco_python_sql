@@ -386,14 +386,35 @@ assembly_lines = ["CD6 Bushing Final",
                   "Zerv OP30 Final",
                   "Zone 100",
                   "Zone 200",
-                  "Zone 300"]
+                  "Zone 300",
+                  "Press 1",
+                  "Press 2",
+                  "Press 3",
+                  "Press 4",
+                  "Press 5",
+                  "Press 6/7",
+                  "Press 8",
+                  "HYD1 Laser 1A",
+                  "HYD1 Laser 1B",
+                  "HYD1 Press 1",
+                  "HYD1 Press 2",
+                  "HYD2 Laser 2A",
+                  "HYD2 Laser 2B",
+                  "HYD2 Press 2",
+                  "HYD3 Laser 3A",
+                  "HYD3 Laser 3B",
+                  "HYD3 Press 3",
+                  "HYD4 Laser 4A",
+                  "HYD4 Laser 4B",
+                  "HYD4 Press 4",
+                  ]
 
 
 df_filtered = df[ ( df['name'].str.contains('|'.join(assembly_lines)) ) & (df['Name_2'] != "not scheduled") ]
 
 df_filtered['year'] = df_filtered['start_time'].apply( lambda x: x.year)
 
-df_filtered = df_filtered[df_filtered['year'] == 2021]
+df_filtered = df_filtered.loc[ ((df_filtered['year'] == 2021) | ((df_filtered['year'] == 2022))) , :]
 
 # Handle Commment and No comments
 def make_comment_from_no_comments(comment, reason_code):
