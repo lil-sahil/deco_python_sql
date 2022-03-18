@@ -154,10 +154,11 @@ class Sql (Line_Metrics):
 
       returns: connection object
     '''
-    conn = pyodbc.connect('Driver={{SQL Server}};'
+    conn = pyodbc.connect('Driver={{ODBC Driver 17 for SQL Server}};'
                           'Server={};'
-                          'Database={};'
-                          'Trusted_Connection=yes;'.format(self.server_name, self.database_name))
+                          'UID=dcotest;'
+                          'PWD=Appletruck1234;'
+                          'Database={};'.format(self.server_name, self.database_name))
     return conn
 
 
@@ -169,12 +170,14 @@ class Sql (Line_Metrics):
 
       returns: pandas dataframe
     '''
+    print(sql_q)
     if (sql_q == None) and (table != None):
       sql_query = pd.read_sql_query('SELECT * FROM [{}].dbo.{}'.format(self.database_name,table),self.create_connection())
     
     elif sql_q != None:
       sql_query = pd.read_sql_query(sql_q,self.create_connection())
 
+    print('Returning SQL query')
     return sql_query
 
 

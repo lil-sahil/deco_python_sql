@@ -14,6 +14,7 @@ class RunMetrics:
 
     # Initialize Connection
     conn = manu.Sql(IP_ADDRESS, DATABASE_NAME)
+    
 
     # Fetch Dataframe
     self.df = conn.table_to_df(TABLE_NAME)
