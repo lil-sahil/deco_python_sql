@@ -23,7 +23,15 @@ class RunMetrics:
 
   
   def getMetrics(self):
+    mapping = {
+      'WLM01 ST130' : 'ST130 Interlock WLM01',
+      'WLM02 ST130' : 'ST130 Interlock WLM02',
+      'WLM03 ST130' : 'ST130 Interlock WLM03'
+    }
+
+
     metrics_df = self.df.loc[(self.df['utilization']> 0.2) & (self.df['oee'] <= 1),:]
+    metrics_df['machine_name'] = metrics_df['machine_name'].replace(mapping)
 
     return metrics_df
 

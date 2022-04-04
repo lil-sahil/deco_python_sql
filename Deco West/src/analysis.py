@@ -3,9 +3,9 @@ import pandas as pd
 import re
 
 # Global Variables
-assembly_lines = ["WLM01 ST130",
-                  "WLM02 ST130",
-                  "WLM03 ST130"]
+assembly_lines = ["ST130 Interlock WLM01",
+                  "ST130 Interlock WLM02",
+                  "ST130 Interlock WLM03"]
 
 # File Save Location
 location = r"\\magna.global\dco\Open_Share\DECO WEST\PowerBI Data\Raw Data\data_DW.csv"
@@ -17,6 +17,8 @@ class RunAnalysis:
 
     # Main Dataframe
     self.df = manu.Failure_analysis().df
+
+    print(self.df)
 
     # Save Location
     self.file_location = location
@@ -34,7 +36,9 @@ class RunAnalysis:
     filtered_data.to_csv(self.file_location)
 
 
-  def filterData(self) -> pd.DataFrame:
+  def filterData(self):
+  
+    
     df_filtered = self.df[ ( self.df['name'].str.contains('|'.join(assembly_lines)) ) & 
                           (self.df['Name_2'] != "not scheduled") ]
 
@@ -43,10 +47,11 @@ class RunAnalysis:
     df_filtered = df_filtered.loc[ ((df_filtered['year'] == 2021) | 
                                   ((df_filtered['year'] == 2022))) , :]
     
+    
     return df_filtered
 
 
-  def handleComment(self, comment, reason_code) -> str:
+  def handleComment(self, comment, reason_code):
     if ( (comment is None) and (reason_code is None) ):
       return "No Comment and No Reason Code"
     
@@ -63,7 +68,8 @@ class RunAnalysis:
       return reason_code
 
   
-  def changeComments(self, df) -> pd.DataFrame:
+  def changeComments(self, df):
+    print(df.head(5))
 
     df['Name_2'] = df[['comment', 'Name_2']].apply(lambda x: self.handleComment(x[0], x[1]), axis = 1)
 
