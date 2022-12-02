@@ -5,10 +5,37 @@ import re
 # Global Variables
 assembly_lines = ["ST130 Interlock WLM01",
                   "ST130 Interlock WLM02",
-                  "ST130 Interlock WLM03"]
+                  "ST130 Interlock WLM03",
+                  "Flex 1 - Final",
+                  "Flex 2 - Final",
+                  "Flex 3 - Final",
+                  "Flex 4 - Final",
+                  "LX AWD - Final",
+                  "Mazak 1",
+                  "Mazak 2",
+                  "Mazak 3",
+                  "Mazak 6",
+                  "Mazak 7",
+                  "FM1",
+                  "FM2",
+                  "FM3",
+                  "6084/85 Bushing",
+                  "6066",
+                  "6063",
+                  "6062/86",
+                  "6084/85",
+                  "6077/78",
+                  "6058/62/63/82",
+                  "6086 Bushing",
+                  "RU XMBR - Final",
+                  "DSSF2",
+                  "DSSF1",
+                  "DSSF3",
+                  "DSSF4",
+                  ]
 
 # File Save Location
-location = r"\\magna.global\dco\Open_Share\DECO WEST\PowerBI Data\Raw Data\data_DW.csv"
+location = r"/media/Data/Deco West/PowerBI Data/Raw Data/data_DW.csv"
 
 
 

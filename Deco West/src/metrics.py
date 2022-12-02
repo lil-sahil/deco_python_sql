@@ -7,7 +7,8 @@ IP_ADDRESS = '172.19.11.38'
 DATABASE_NAME = 'DW-FcDbExporter'
 TABLE_NAME = 'machine_performances'
 
-LOCATION = r"\\magna.global\dco\Open_Share\DECO WEST\PowerBI Data\Raw Data\dw_metrics.csv"
+LOCATION = r"/media/Data/Deco West/PowerBI Data/Raw Data/dw_metrics.csv"
+# LOCATION = r"\\magna.global\dco\Open_Share\DECO WEST\PowerBI Data\Raw Data\dw_metrics.csv"
 
 class RunMetrics:
   def __init__(self):
