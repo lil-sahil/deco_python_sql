@@ -205,7 +205,14 @@ class Failure_analysis:
     #Comment DF
     print('Getting Component Df')
     s = Sql(ADRESS,TABLE)
-    sql_query = '''SELECT dbo.annotations.comment, dbo.machine_activities.machine_id, dbo.machine_activities.start_time, dbo.machine_activities.end_time, dbo.machine_activities.duration, dbo.machines.name, dbo.machine_activities.downtime_code_id, dbo.downtime_codes.name as Name_2
+    sql_query = '''SELECT dbo.annotations.comment, 
+                          dbo.machine_activities.machine_id, 
+                          CAST(dbo.machine_activities.start_time AT TIME ZONE 'UTC' AT TIME ZONE 'EASTERN STANDARD TIME' AS nvarchar(100)) AS start_time, 
+                          CAST(dbo.machine_activities.end_time AT TIME ZONE 'UTC' AT TIME ZONE 'EASTERN STANDARD TIME' AS nvarchar(100)) AS end_time, 
+                          dbo.machine_activities.duration, 
+                          dbo.machines.name, 
+                          dbo.machine_activities.downtime_code_id, 
+                          dbo.downtime_codes.name as Name_2
                     FROM dbo.annotations
                     RIGHT JOIN dbo.machine_activities ON dbo.annotations.annotateable_id = dbo.machine_activities.id
                     INNER JOIN dbo.machines ON dbo.machine_activities.machine_id = dbo.machines.id

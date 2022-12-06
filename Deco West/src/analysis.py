@@ -69,10 +69,10 @@ class RunAnalysis:
     df_filtered = self.df[ ( self.df['name'].str.contains('|'.join(assembly_lines)) ) & 
                           (self.df['Name_2'] != "not scheduled") ]
 
-    df_filtered['year'] = df_filtered['start_time'].apply( lambda x: x.year)
+    df_filtered['year'] = df_filtered['start_time'].apply( lambda x: x.split('-')[0])
 
-    df_filtered = df_filtered.loc[ ((df_filtered['year'] == 2021) | 
-                                  ((df_filtered['year'] == 2022))) , :]
+    df_filtered = df_filtered.loc[ ((df_filtered['year'] == '2021') | 
+                                  ((df_filtered['year'] == '2022'))) , :]
     
     
     return df_filtered
